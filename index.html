@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trương Văn Hồng Quân — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Be Vietnam Pro', sans-serif; background: #0d0d0f; color: #f0ede6; min-height: 100vh; overflow-x: hidden; }
+  .noise { position: fixed; inset: 0; pointer-events: none; z-index: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); background-size: 200px; opacity: 0.5; }
+  .blob { position: fixed; border-radius: 50%; filter: blur(90px); pointer-events: none; z-index: 0; }
+  .blob-1 { width: 400px; height: 400px; background: #4f3aff33; top: -100px; left: -80px; animation: drift1 8s ease-in-out infinite alternate; }
+  .blob-2 { width: 300px; height: 300px; background: #ff4faa22; bottom: 0; right: -60px; animation: drift2 10s ease-in-out infinite alternate; }
+  .blob-3 { width: 200px; height: 200px; background: #4fffd422; top: 40%; left: 60%; animation: drift1 6s ease-in-out infinite alternate-reverse; }
+  @keyframes drift1 { from { transform: translate(0,0) scale(1); } to { transform: translate(30px,20px) scale(1.08); } }
+  @keyframes drift2 { from { transform: translate(0,0) scale(1); } to { transform: translate(-20px,-30px) scale(1.1); } }
+
+  .page { position: relative; z-index: 1; max-width: 780px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  .lang-toggle { display: flex; justify-content: flex-end; margin-bottom: 32px; animation: fadeUp 0.4s ease both; }
+  .lang-wrap { display: flex; align-items: center; gap: 0; background: #141418; border: 1px solid #1e1e28; border-radius: 12px; overflow: hidden; padding: 4px; }
+  .lang-btn { padding: 7px 16px; border-radius: 8px; font-family: 'Be Vietnam Pro', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border: none; cursor: pointer; transition: all 0.2s ease; background: transparent; color: #4a465a; }
+  .lang-btn.active { background: linear-gradient(135deg,#4f3aff,#7a4fff); color: #fff; }
+
+  .hero { display: flex; align-items: flex-start; gap: 28px; margin-bottom: 52px; animation: fadeUp 0.7s ease both; }
+  .avatar { flex-shrink: 0; width: 100px; height: 100px; border-radius: 28px; background: linear-gradient(135deg,#4f3aff,#ff4faa); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+  .avatar::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg,rgba(255,255,255,0.15) 0%,transparent 50%); }
+  .avatar-emoji { font-size: 38px; line-height: 1; position: relative; z-index: 1; animation: wiggle 3s ease-in-out infinite; }
+  @keyframes wiggle { 0%,100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
+  .hero-text { flex: 1; padding-top: 4px; }
+  .greeting { font-size: 12px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: #4f3aff; margin-bottom: 6px; background: #4f3aff22; display: inline-block; padding: 4px 10px; border-radius: 6px; }
+  .name { font-family: 'Syne', sans-serif; font-size: clamp(26px,5vw,40px); font-weight: 800; line-height: 1.15; color: #f0ede6; margin-bottom: 10px; }
+  .name span { color: #ff4faa; }
+  .tagline { font-size: 14px; color: #9b97a0; line-height: 1.7; max-width: 380px; }
+  .status-badge { margin-top: 14px; display: inline-flex; align-items: center; gap: 7px; background: #1a1a20; border: 1px solid #2a2a32; border-radius: 999px; padding: 6px 14px; font-size: 12px; color: #9b97a0; }
+  .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #3dffb0; box-shadow: 0 0 8px #3dffb0; animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #4a465a; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: #1e1e26; }
+
+  .skills-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 48px; animation: fadeUp 0.7s 0.15s ease both; }
+  .skill-card { background: #141418; border: 1px solid #1e1e28; border-radius: 20px; padding: 22px 18px; position: relative; overflow: hidden; transition: transform 0.25s ease,border-color 0.25s ease; cursor: default; }
+  .skill-card:hover { transform: translateY(-5px); }
+  .skill-card:hover .skill-glow { opacity: 1; }
+  .skill-glow { position: absolute; inset: 0; border-radius: inherit; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+  .skill-card.unity .skill-glow { background: radial-gradient(circle at 50% 0%,#4f3aff18,transparent 70%); }
+  .skill-card.unity:hover { border-color: #4f3aff55; }
+  .skill-card.photoshop .skill-glow { background: radial-gradient(circle at 50% 0%,#00c0ff18,transparent 70%); }
+  .skill-card.photoshop:hover { border-color: #00c0ff44; }
+  .skill-card.figma .skill-glow { background: radial-gradient(circle at 50% 0%,#ff4faa18,transparent 70%); }
+  .skill-card.figma:hover { border-color: #ff4faa44; }
+  .skill-icon { font-size: 28px; margin-bottom: 12px; display: block; line-height: 1; }
+  .skill-name { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: #f0ede6; margin-bottom: 4px; }
+  .skill-sub { font-size: 11px; color: #55526a; }
+  .skill-bar-wrap { margin-top: 14px; height: 3px; background: #1e1e28; border-radius: 99px; overflow: hidden; }
+  .skill-bar { height: 100%; border-radius: 99px; animation: fillBar 1.2s 0.5s ease both; }
+  .unity .skill-bar { background: #4f3aff; width: 90%; }
+  .photoshop .skill-bar { background: #00c0ff; width: 80%; }
+  .figma .skill-bar { background: #ff4faa; width: 85%; }
+  @keyframes fillBar { from { width: 0 !important; } }
+
+  .facts-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 48px; animation: fadeUp 0.7s 0.3s ease both; }
+  .fact-card { background: #141418; border: 1px solid #1e1e28; border-radius: 16px; padding: 18px 16px; text-align: center; }
+  .fact-num { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; background: linear-gradient(135deg,#4f3aff,#ff4faa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .fact-label { font-size: 11px; color: #55526a; margin-top: 3px; }
+
+  .about-box { background: #141418; border: 1px solid #1e1e28; border-radius: 20px; padding: 28px 24px; margin-bottom: 48px; position: relative; overflow: hidden; animation: fadeUp 0.7s 0.45s ease both; }
+  .about-box::before { content: '"'; position: absolute; top: -20px; left: 12px; font-family: 'Syne', sans-serif; font-size: 160px; font-weight: 800; color: #ffffff06; line-height: 1; pointer-events: none; }
+  .about-text { font-size: 15px; line-height: 1.8; color: #9b97a0; position: relative; z-index: 1; }
+  .about-text strong { color: #f0ede6; font-weight: 700; }
+  .highlight { color: #ff4faa; font-weight: 700; }
+  .highlight2 { color: #7a6fff; font-weight: 700; }
+
+  .contact-row { display: flex; gap: 12px; flex-wrap: wrap; animation: fadeUp 0.7s 0.6s ease both; }
+  .contact-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; font-family: 'Be Vietnam Pro', sans-serif; font-size: 13px; font-weight: 600; text-decoration: none; transition: transform 0.2s ease,opacity 0.2s ease; cursor: pointer; border: none; }
+  .contact-btn:hover { transform: translateY(-2px); opacity: 0.85; }
+  .btn-primary { background: linear-gradient(135deg,#4f3aff,#7a4fff); color: #fff; }
+  .btn-secondary { background: #1a1a22; border: 1px solid #2a2a34; color: #9b97a0; }
+
+  .corner-tag { position: fixed; bottom: 20px; right: 20px; background: #141418; border: 1px solid #2a2a34; border-radius: 10px; padding: 8px 12px; font-size: 11px; color: #3a3745; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; z-index: 10; font-family: 'Be Vietnam Pro', sans-serif; }
+
+  body.vi [data-lang="en"] { display: none; }
+  body.en [data-lang="vi"] { display: none; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 540px) { .skills-grid { grid-template-columns: 1fr; } .hero { flex-direction: column; gap: 16px; } .name { font-size: 28px; } }
+</style>
+</head>
+<body class="en">
+<div class="noise"></div>
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+
+<div class="page">
+
+  <div class="lang-toggle">
+    <div class="lang-wrap">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">🇬🇧 EN</button>
+      <button class="lang-btn" id="btn-vi" onclick="setLang('vi')">🇻🇳 VI</button>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="avatar">
+      <span class="avatar-emoji">🎮</span>
+    </div>
+    <div class="hero-text">
+      <p class="greeting" data-lang="en">Hey there, I'm</p>
+      <p class="greeting" data-lang="vi">Xin chào, mình là</p>
+      <h1 class="name">Trương Văn<br><span>Hồng Quân</span></h1>
+      <p class="tagline" data-lang="en">Turning caffeine & code into gaming experiences that actually slap. 🎯</p>
+      <p class="tagline" data-lang="vi">Biến cà phê & code thành trải nghiệm game cực chất. 🎯</p>
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        <span data-lang="en">Open to new quests</span>
+        <span data-lang="vi">Sẵn sàng chiến dự án mới</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-label">
+    <span data-lang="en">Superpowers</span>
+    <span data-lang="vi">Siêu năng lực</span>
+  </p>
+  <div class="skills-grid">
+    <div class="skill-card unity">
+      <div class="skill-glow"></div>
+      <span class="skill-icon">🕹️</span>
+      <p class="skill-name">Unity Dev</p>
+      <p class="skill-sub" data-lang="en">C# · Game mechanics · XR</p>
+      <p class="skill-sub" data-lang="vi">C# · Cơ chế game · XR</p>
+      <div class="skill-bar-wrap"><div class="skill-bar"></div></div>
+    </div>
+    <div class="skill-card photoshop">
+      <div class="skill-glow"></div>
+      <span class="skill-icon">🖼️</span>
+      <p class="skill-name">Photoshop</p>
+      <p class="skill-sub" data-lang="en">Compositing · Retouching · FX</p>
+      <p class="skill-sub" data-lang="vi">Ghép ảnh · Chỉnh sửa · Hiệu ứng</p>
+      <div class="skill-bar-wrap"><div class="skill-bar"></div></div>
+    </div>
+    <div class="skill-card figma">
+      <div class="skill-glow"></div>
+      <span class="skill-icon">✏️</span>
+      <p class="skill-name">Figma</p>
+      <p class="skill-sub" data-lang="en">UI/UX · Prototyping · Systems</p>
+      <p class="skill-sub" data-lang="vi">UI/UX · Prototype · Design System</p>
+      <div class="skill-bar-wrap"><div class="skill-bar"></div></div>
+    </div>
+  </div>
+
+  <p class="section-label">
+    <span data-lang="en">By the numbers</span>
+    <span data-lang="vi">Con số biết nói</span>
+  </p>
+  <div class="facts-row">
+    <div class="fact-card">
+      <p class="fact-num">∞</p>
+      <p class="fact-label" data-lang="en">Bugs squashed</p>
+      <p class="fact-label" data-lang="vi">Bug đã dẹp</p>
+    </div>
+    <div class="fact-card">
+      <p class="fact-num">3+</p>
+      <p class="fact-label" data-lang="en">Years leveling up</p>
+      <p class="fact-label" data-lang="vi">Năm tích kinh nghiệm</p>
+    </div>
+    <div class="fact-card">
+      <p class="fact-num">☕</p>
+      <p class="fact-label" data-lang="en">Cups per deadline</p>
+      <p class="fact-label" data-lang="vi">Ly cà phê mỗi deadline</p>
+    </div>
+  </div>
+
+  <p class="section-label">
+    <span data-lang="en">About me</span>
+    <span data-lang="vi">Về mình</span>
+  </p>
+  <div class="about-box">
+    <p class="about-text" data-lang="en">
+      I'm a <strong>Unity developer</strong> who moonlights as a <span class="highlight">pixel-pusher</span> and <span class="highlight2">UI nerd</span>.
+      I love building games that feel <strong>alive</strong> — from tight mechanics to polished interfaces.
+      When I'm not wrestling with colliders, you'll find me crafting sleek designs in <strong>Figma</strong>
+      or compositing ridiculous stuff in <strong>Photoshop</strong>. 🎨
+      <br><br>
+      <strong>TL;DR:</strong> I make things move, look good, and (sometimes) actually work on the first try.
+    </p>
+    <p class="about-text" data-lang="vi">
+      Mình là một <strong>Unity developer</strong> kiêm <span class="highlight">nghiện pixel</span> và <span class="highlight2">mê UI</span>.
+      Mình thích xây dựng những trò chơi có <strong>hồn</strong> — từ cơ chế chặt chẽ đến giao diện bóng bẩy.
+      Khi không vật lộn với collider, bạn sẽ thấy mình đang thiết kế trong <strong>Figma</strong>
+      hoặc ghép ảnh "điên rồ" trong <strong>Photoshop</strong>. 🎨
+      <br><br>
+      <strong>Tóm lại:</strong> Mình làm cho mọi thứ chuyển động, trông ngầu, và (đôi khi) chạy đúng ngay lần đầu.
+    </p>
+  </div>
+
+  <p class="section-label">
+    <span data-lang="en">Let's connect</span>
+    <span data-lang="vi">Kết nối nào</span>
+  </p>
+  <div class="contact-row">
+    <a class="contact-btn btn-primary" href="mailto:hongquan@example.com">
+      <span>📩</span>
+      <span data-lang="en">Drop a message</span>
+      <span data-lang="vi">Nhắn tin đi</span>
+    </a>
+    <a class="contact-btn btn-secondary" href="#">
+      <span>💼</span> LinkedIn
+    </a>
+    <a class="contact-btn btn-secondary" href="#">
+      <span>🐙</span> GitHub
+    </a>
+  </div>
+
+</div>
+
+<div class="corner-tag">v2.1 · HCM City</div>
+
+<script>
+function setLang(lang) {
+  document.body.className = lang;
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-vi').classList.toggle('active', lang === 'vi');
+}
+</script>
+</body>
+</html>
