@@ -3,64 +3,401 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glass Morphism Style</title>
+    <title>🎮 Quân's Creative Hub - Glass Liquid Style</title>
     <style>
-        body {
+        * {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: #e0e0e0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .glass {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 20px;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            color: #333;
             position: relative;
-            overflow: hidden;
-            width: 90%;
-            max-width: 600px;
+            overflow-x: hidden;
         }
+
+        /* Animated liquid blobs background */
+        .liquid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
         .blob {
             position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            animation: float 5s infinite;
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            opacity: 0.15;
+            filter: blur(40px);
+            animation: blobAnimation 8s infinite ease-in-out;
         }
-        @keyframes float {
+
+        .blob1 {
+            width: 300px;
+            height: 300px;
+            background: #667eea;
+            top: -10%;
+            left: -5%;
+            animation-delay: 0s;
+        }
+
+        .blob2 {
+            width: 400px;
+            height: 400px;
+            background: #764ba2;
+            bottom: -10%;
+            right: -5%;
+            animation-delay: 2s;
+        }
+
+        .blob3 {
+            width: 350px;
+            height: 350px;
+            background: #f093fb;
+            top: 50%;
+            left: 50%;
+            animation-delay: 4s;
+        }
+
+        @keyframes blobAnimation {
             0%, 100% {
-                transform: translateY(0);
+                transform: translate(0, 0) rotate(0deg);
+            }
+            33% {
+                transform: translate(30px, -50px) rotate(120deg);
+            }
+            66% {
+                transform: translate(-20px, 20px) rotate(240deg);
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Glass morphism effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 
+                0 8px 32px rgba(31, 38, 135, 0.37),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-dark {
+            background: rgba(20, 10, 50, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            color: white;
+            animation: fadeIn 1s ease-in;
+        }
+
+        header h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+            text-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            font-weight: 300;
+        }
+
+        .skills-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 50px 0;
+        }
+
+        .skill-card {
+            padding: 35px;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                transform: translate(-30%, -30%);
+            }
+            100% {
+                transform: translate(30%, 30%);
+            }
+        }
+
+        .skill-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 
+                0 16px 48px rgba(31, 38, 135, 0.5),
+                inset 0 0 30px rgba(255, 255, 255, 0.15);
+        }
+
+        .skill-card h3 {
+            color: #ffffff;
+            margin: 20px 0 15px 0;
+            font-size: 1.6em;
+            text-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 2;
+        }
+
+        .skill-card p {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            font-size: 1em;
+            position: relative;
+            z-index: 2;
+        }
+
+        .emoji {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            display: block;
+            animation: floatEmoji 3s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes floatEmoji {
+            0%, 100% {
+                transform: translateY(0px);
             }
             50% {
-                transform: translateY(-20px);
+                transform: translateY(-15px);
             }
         }
-        .responsive {
-            font-size: 1.2em;
+
+        .about-section {
+            padding: 50px;
+            border-radius: 25px;
+            margin: 50px 0;
+            color: white;
+            position: relative;
+            z-index: 2;
         }
-        @media (max-width: 480px) {
-            .responsive {
-                font-size: 1em;
+
+        .about-section h2 {
+            color: #ffffff;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .about-section p {
+            color: rgba(255, 255, 255, 0.95);
+            line-height: 1.9;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        .fun-fact {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-left: 4px solid rgba(255, 255, 255, 0.5);
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 15px;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fun-fact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: white;
+            margin-top: 50px;
+            position: relative;
+            z-index: 2;
+        }
+
+        footer p {
+            margin: 10px 0;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .social-links {
+            margin: 25px 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            font-size: 1.8em;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 16px rgba(31, 38, 135, 0.2);
+        }
+
+        .social-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 12px 24px rgba(31, 38, 135, 0.4);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
+
         @media (max-width: 768px) {
-            .responsive {
-                font-size: 1.1em;
+            header h1 {
+                font-size: 2.2em;
             }
+
+            .about-section {
+                padding: 25px;
+            }
+
+            .skills-section {
+                grid-template-columns: 1fr;
+            }
+
+            .blob {
+                filter: blur(30px);
+            }
+        }
+
+        /* Gradient text effect */
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
     </style>
 </head>
 <body>
-    <div class="glass">
-        <h1 class="responsive">Welcome to Glass Morphism Style</h1>
-        <p class="responsive">This design showcases glass morphism effects with animated blobs.</p>
-        <div class="blob" style="width: 100px; height: 100px; top: -20%; left: 10%; animation-duration: 6s;"></div>
-        <div class="blob" style="width: 80px; height: 80px; bottom: -30%; right: 15%; animation-duration: 4s;"></div>
+    <!-- Liquid background blobs -->
+    <div class="liquid-bg">
+        <div class="blob blob1"></div>
+        <div class="blob blob2"></div>
+        <div class="blob blob3"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>🎮 Trương Văn Hồng Quân</h1>
+            <p>Unity Developer | Photoshop Artist | Figma Designer | Code Jedi Master 🧙‍♂️</p>
+        </header>
+
+        <section class="skills-section">
+            <div class="skill-card glass">
+                <span class="emoji">🎮</span>
+                <h3>Unity Development</h3>
+                <p>Building immersive games and interactive experiences. If bugs were features, I'd be famous! 😄</p>
+            </div>
+
+            <div class="skill-card glass">
+                <span class="emoji">🎨</span>
+                <h3>Photoshop</h3>
+                <p>Crafting pixel-perfect designs and visual magic. My layers don't judge my organizational skills.</p>
+            </div>
+
+            <div class="skill-card glass">
+                <span class="emoji">🎯</span>
+                <h3>Figma Design</h3>
+                <p>Prototyping beautiful UI/UX. Who needs sleep when you have design systems? 💪</p>
+            </div>
+        </section>
+
+        <section class="about-section glass">
+            <h2>👋 About Me</h2>
+            <p>
+                Welcome to my creative corner of the internet! I'm a passionate developer and designer who believes that good code and beautiful design go hand-in-hand. Whether I'm debugging at 3 AM or perfecting a design in Figma, I bring humor, creativity, and modern aesthetics to everything I do.
+            </p>
+            
+            <div class="fun-fact">
+                💡 Fun Fact: I once spent 4 hours debugging code only to realize I had forgotten a semicolon. The semicolon? It was right there, mocking me the whole time.
+            </div>
+
+            <p>
+                When I'm not coding or designing, you can find me exploring new tools, learning cutting-edge tech, and sharing my journey with the dev community. Let's create something awesome together! 🚀
+            </p>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Trương Văn Hồng Quân. Built with ❤️, code, and a little bit of magic.</p>
+            <div class="social-links">
+                <a href="#" title="GitHub">🐙</a>
+                <a href="#" title="LinkedIn">💼</a>
+                <a href="#" title="Twitter">🐦</a>
+                <a href="#" title="Email">📧</a>
+            </div>
+            <p>Stay funny, stay modern, stay awesome! 😎</p>
+        </footer>
     </div>
 </body>
 </html>
